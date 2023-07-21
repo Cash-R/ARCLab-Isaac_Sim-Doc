@@ -43,7 +43,7 @@ In substitute of downloading **Isaac Sim** locally, the application may be launc
         --build-arg VULKAN_SDK_VERSION=1.3.224.1 \
         --file Dockerfile.2022.2.1-ubuntu20.04 
     ```
-3. Create a ```.sh``` file, paste the following within the file:
+3. Create a ```.sh``` file in the cloned repository, paste the following within the file:
     ```
     docker run --name isaac-sim --entrypoint bash -it --gpus 1 -e "ACCEPT_EULA=Y" --rm --network=host \
         -v ~/docker/isaac-sim/cache/kit:/isaac-sim/kit/cache/Kit:rw \
@@ -57,7 +57,32 @@ In substitute of downloading **Isaac Sim** locally, the application may be launc
         isaac-sim:2022.2.1-ubuntu20.04
     ```
     * Running the ```.sh``` file will bring up a bash terminal with all the associated files necessary for running Isaac Sim.
-4. In the /isaac-sim/ directory, run in headless mode:
+    * You may verify that the container is running properly by entering ```docker ps``` into a separate terminal connected to the server. Check that 'isaac-sim' is one of the running containers.
+4. Before running the Isaac Sim application, it would be best to generate the IP address associated with the container (By default, this is identical to the server's IP) <br/>
+Run the following in the container's bash terminal:
+    ```
+    hostname -I | awk '{print $1}'
+    ```
+    * Copy the IP address as it will be necessary to connect via the streaming client. 
+
+5. In the **/isaac-sim/** directory, run in headless mode:
     ```
     ./runheadless.native.sh
     ```
+    * Isaac Sim is now running.
+6. Generate the UI by connecting to the container through the **Omniverse Streaming Client** 
+    * If possible, you will want to open the Omniverse Streaming Client in another desktop as the GUI will fill the entire screen and is non responsive when exited. <br> <br/>
+    First, open the secondary desktop and then open the steaming application through the **Omniverse Launcher**.
+
+    * Paste the IP address into the first box and select your screen's resolution
+
+### Exiting The Streaming Client
+
+Exiting the streaming client is unintuitive as of the current build.
+1. Within the GUI, select: File < Exit
+    * This will begin to shutdown the GUI, but usually will only get to an error popup stating that the application is unresponsive.
+    * Select ***Close***.
+
+    Note: An alternate method of shutting down the GUI is by killing the task within ***Task Manager***, though you may still have to select ***Close*** due to the 'unresponsive' error.
+2. Close the container by exiting out of the bash terminal.
+* ***Note that all applications saved wtihin the GUI will be persisted after the container has been closed, HOWEVER, all files, folders, and changes to any of the Python source code will not be saved if done from a separate terminal.***
