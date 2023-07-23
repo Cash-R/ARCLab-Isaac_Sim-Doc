@@ -87,3 +87,29 @@ Exiting the streaming client is unintuitive as of the current build.
     Note: An alternate method of shutting down the GUI is by killing the task within ***Task Manager***, though you may still have to select ***Close*** due to the 'unresponsive' error.
 2. Close the container by exiting out of the bash terminal.
 * ***Note that all applications saved wtihin the GUI will be persisted after the container has been closed, HOWEVER, all files, folders, and changes to any of the Python source code will not be saved if done from a separate terminal.***
+
+### Workflow Suggestions:
+The following will outline the general workflow that I work with. The second terminal will serve as your main method of altering the source code of each simulation.
+1. Open a minimum of two bash shell terminals connected to the running container.
+    * Open another terminal, connect to the server, and navigate to the cloned NVIDIA directory.
+    * After starting the container's initial terminal, you can connect another bash terminal using:
+        ```
+        docker exec -it <name_of_container> bash
+        ```
+    Note: You can check the list of running container names using:
+    ```docker ps```
+
+2. Install vim or nano on the server to alter the source code and/or access the hidden files that allow for ssh tunneling.
+
+3. Save any changes (such as the text editors or any changes to the file structure) made to the current container by doing the following:
+    * Sign onto the ARCLab server using another terminal. Input:
+        ```
+        docker commit <current_container_name> <new_image_name:tag>
+        ```
+    * ```current_container_name``` is the name of a **running** container.
+    * ```new_image_name``` is the name of the image which contains the saved changes. ```tag``` is simply the tag associated with the new image.
+    * Delete the outdated image using:
+        ```
+        docker rmi <old_image:tag>
+        ```
+    * Update the ```.sh``` file used to run the container with the new image name (assuming the updated image has a different name). 
