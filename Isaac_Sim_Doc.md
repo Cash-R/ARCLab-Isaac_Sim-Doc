@@ -27,7 +27,8 @@ The **Omniverse Launcher** can be used to launch Isaac Sim directly (assuming Is
 In substitute of downloading **Isaac Sim** locally, the application may be launched via Dockerfile in its own container.
 1. Follow the instructions on the [Isaac Sim github](https://github.com/NVIDIA-Omniverse/IsaacSim-dockerfiles) to get access to clone the repository. 
     * Get access to the [Isaac Sim Container](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim), and either generate an [NGC API Key](https://docs.nvidia.com/ngc/gpu-cloud/ngc-user-guide/index.html#generating-api-key) or reference a currently existing one (assuming you've generated one previously)
-2. Log onto the server and navigate the path to wherever you choose to clone the repository.
+2. Build or reference the image on the ARCLab server.
+    * Log onto the server and navigate the path to wherever you choose to clone the repository.
     * Cloning the Isaac Sim repository requires access. <br/>Run:<br/>
         ```docker login nvcr.io```<br/>
     Use **$oauthtoken** in place of username <br/>
